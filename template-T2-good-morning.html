@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 1080px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background: #3D2314;
+    }
+
+    .frame {
+      width: 1080px;
+      height: 1080px;
+      position: relative;
+      background: linear-gradient(145deg, #2A1A0E 0%, #3D2314 35%, #6B3F2A 70%, #8B5A3A 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Decorative coffee ring patterns */
+    .ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(196,149,106,0.12);
+    }
+    .ring-1 { width: 900px; height: 900px; top: 90px; left: 90px; }
+    .ring-2 { width: 700px; height: 700px; top: 190px; left: 190px; border-color: rgba(196,149,106,0.08); }
+    .ring-3 { width: 500px; height: 500px; top: 290px; left: 290px; border-color: rgba(196,149,106,0.06); }
+
+    /* Top steam lines */
+    .steam-group {
+      position: absolute;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 16px;
+      opacity: 0.3;
+    }
+    .steam {
+      width: 2px;
+      background: linear-gradient(to top, rgba(196,149,106,0.8), transparent);
+      border-radius: 2px;
+    }
+    .steam-1 { height: 80px; }
+    .steam-2 { height: 120px; margin-top: 20px; }
+    .steam-3 { height: 60px; margin-top: 40px; }
+
+    /* Grain texture overlay */
+    .grain {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    /* Corner decorations */
+    .corner-tl, .corner-br {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-color: rgba(196,149,106,0.25);
+      border-style: solid;
+    }
+    .corner-tl { top: 40px; left: 40px; border-width: 2px 0 0 2px; }
+    .corner-br { bottom: 40px; right: 40px; border-width: 0 2px 2px 0; }
+
+    /* Content */
+    .content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 0 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+
+    .day-badge {
+      display: inline-block;
+      background: rgba(196,149,106,0.15);
+      border: 1px solid rgba(196,149,106,0.4);
+      color: #C4956A;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      padding: 8px 28px;
+      border-radius: 50px;
+      margin-bottom: 40px;
+    }
+
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 80px;
+      font-weight: 700;
+      color: #F5E6C8;
+      line-height: 1.0;
+      letter-spacing: -2px;
+      margin-bottom: 8px;
+    }
+    .headline em {
+      color: #C4956A;
+      font-style: italic;
+    }
+
+    .sub-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-style: italic;
+      color: rgba(245,230,200,0.6);
+      margin-bottom: 48px;
+      letter-spacing: 1px;
+    }
+
+    .divider {
+      width: 80px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, #C4956A, transparent);
+      margin-bottom: 48px;
+    }
+
+    .quote-text {
+      font-size: 28px;
+      font-weight: 300;
+      color: rgba(245,230,200,0.85);
+      line-height: 1.6;
+      max-width: 820px;
+      font-style: italic;
+      margin-bottom: 48px;
+      /* ⬇ BIẾN: Make.com sẽ thay thế */
+    }
+
+    .address-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(196,149,106,0.7);
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+    .dot { width: 4px; height: 4px; background: #C4956A; border-radius: 50%; opacity: 0.5; }
+
+    /* Brand watermark bottom */
+    .brand-bottom {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 32px 56px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      z-index: 10;
+    }
+
+    .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      color: rgba(245,230,200,0.9);
+      letter-spacing: 1px;
+    }
+    .brand-sub {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(196,149,106,0.6);
+      margin-top: 4px;
+    }
+
+    .brand-right {
+      text-align: right;
+    }
+    .brand-tag {
+      font-size: 13px;
+      color: rgba(196,149,106,0.6);
+      font-weight: 400;
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <div class="grain"></div>
+    <div class="ring ring-1"></div>
+    <div class="ring ring-2"></div>
+    <div class="ring ring-3"></div>
+    <div class="corner-tl"></div>
+    <div class="corner-br"></div>
+
+    <div class="steam-group">
+      <div class="steam steam-1"></div>
+      <div class="steam steam-2"></div>
+      <div class="steam steam-3"></div>
+    </div>
+
+    <div class="content">
+      <div class="day-badge">Thứ Hai · Good Morning</div>
+
+      <div class="headline">Chào Buổi<br>Sáng, <em>Pleiku</em></div>
+      <div class="sub-headline">Một ngày mới, một ly cà phê mới</div>
+
+      <div class="divider"></div>
+
+      <!-- ⬇ BIẾN ĐỘNG: Thay bằng {{quote}} từ Google Sheets -->
+      <div class="quote-text">
+        {{quote}}
+      </div>
+
+      <div class="address-row">
+        <span>☕</span>
+        <div class="dot"></div>
+        <span>141 Cách Mạng Tháng 8, Pleiku</span>
+        <div class="dot"></div>
+        <span>Mở cửa từ 6:30 sáng</span>
+      </div>
+    </div>
+
+    <div class="brand-bottom">
+      <div>
+        <div class="brand-name">Hy Coffee</div>
+        <div class="brand-sub">Truyền Thống Việt Nam</div>
+      </div>
+      <div class="brand-right">
+        <div class="brand-tag">#HyCoffee #GoodMorningPleiku</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

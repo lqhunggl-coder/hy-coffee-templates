@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 1080px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: 'Be Vietnam Pro', sans-serif;
+    }
+
+    .frame {
+      width: 1080px;
+      height: 1080px;
+      position: relative;
+      /* Caramel-gold – weekend warmth */
+      background: linear-gradient(145deg, #4A2C0A 0%, #7A4A15 40%, #C4956A 80%, #D4A57A 100%);
+      overflow: hidden;
+    }
+
+    /* Halftone-style circles top-right */
+    .dot-grid {
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 400px;
+      height: 400px;
+      opacity: 0.08;
+      background-image: radial-gradient(circle, #FDF8EE 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Light bokeh */
+    .bokeh {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(253,248,238,0.06);
+    }
+    .b1 { width: 300px; height: 300px; top: -100px; right: 200px; filter: blur(60px); }
+    .b2 { width: 200px; height: 200px; bottom: 100px; left: -50px; filter: blur(40px); }
+
+    /* Corner ornament */
+    .corner-ornament {
+      position: absolute;
+      top: 48px; right: 56px;
+      font-size: 80px;
+      opacity: 0.12;
+    }
+
+    /* Weekend grid layout */
+    .header {
+      position: absolute;
+      top: 56px; left: 64px;
+      z-index: 10;
+    }
+    .weekend-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(253,248,238,0.15);
+      border: 1px solid rgba(253,248,238,0.3);
+      color: #FDF8EE;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      border-radius: 50px;
+    }
+
+    /* Main – center */
+    .main {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      z-index: 10;
+      padding: 120px 72px 100px;
+      gap: 60px;
+    }
+
+    /* Left column */
+    .left-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .day-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: rgba(253,248,238,0.55);
+      margin-bottom: 24px;
+    }
+
+    .big-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 68px;
+      font-weight: 700;
+      color: #FDF8EE;
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+    .big-title em { color: #3D2314; font-style: italic; }
+
+    .title-sub {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 22px;
+      color: rgba(253,248,238,0.55);
+      margin-bottom: 40px;
+    }
+
+    .divider { width: 60px; height: 2px; background: linear-gradient(to right, #FDF8EE, transparent); opacity: 0.5; margin-bottom: 40px; }
+
+    /* ⬇ BIẾN: description */
+    .description {
+      font-size: 19px;
+      font-weight: 400;
+      color: rgba(253,248,238,0.80);
+      line-height: 1.7;
+      margin-bottom: 44px;
+    }
+
+    /* Drink cards */
+    .drink-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .drink-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(253,248,238,0.12);
+      border: 1px solid rgba(253,248,238,0.2);
+      padding: 14px 20px;
+      border-radius: 12px;
+    }
+    .drink-icon { font-size: 28px; }
+    .drink-info {}
+    .drink-n { font-size: 16px; font-weight: 600; color: #FDF8EE; }
+    .drink-p { font-size: 13px; color: rgba(253,248,238,0.6); margin-top: 2px; }
+
+    /* Right column – big featured visual */
+    .right-col {
+      width: 380px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .feature-circle {
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: rgba(253,248,238,0.08);
+      border: 2px solid rgba(253,248,238,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 160px;
+      position: relative;
+    }
+
+    .feature-price {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: #3D2314;
+      color: #C4956A;
+      font-size: 20px;
+      font-weight: 700;
+      padding: 10px 20px;
+      border-radius: 50px;
+    }
+
+    /* Brand footer */
+    .footer-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 26px 72px;
+      background: rgba(0,0,0,0.15);
+      border-top: 1px solid rgba(253,248,238,0.12);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+    .brand-name { font-family: 'Playfair Display', serif; font-size: 22px; color: rgba(253,248,238,0.9); }
+    .brand-sub { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: rgba(253,248,238,0.35); margin-top: 3px; }
+    .brand-tag { font-size: 13px; color: rgba(253,248,238,0.35); text-align: right; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <div class="dot-grid"></div>
+    <div class="bokeh b1"></div>
+    <div class="bokeh b2"></div>
+    <div class="corner-ornament">🌿</div>
+
+    <div class="header">
+      <div class="weekend-badge">🎊 Weekend Special</div>
+    </div>
+
+    <div class="main">
+      <div class="left-col">
+        <div class="day-label">Thứ Bảy · Đặc Biệt Cuối Tuần</div>
+
+        <!-- ⬇ BIẾN: {{weekend_title}} -->
+        <div class="big-title">{{weekend_title}}</div>
+        <!-- ⬇ BIẾN: {{weekend_subtitle}} -->
+        <div class="title-sub">{{weekend_subtitle}}</div>
+
+        <div class="divider"></div>
+
+        <!-- ⬇ BIẾN: {{weekend_desc}} -->
+        <div class="description">{{weekend_desc}}</div>
+
+        <!-- ⬇ BIẾN: {{drink_1_icon}}, {{drink_1_name}}, {{drink_1_price}}, tương tự drink_2 -->
+        <div class="drink-cards">
+          <div class="drink-card">
+            <span class="drink-icon">{{drink_1_icon}}</span>
+            <div class="drink-info">
+              <div class="drink-n">{{drink_1_name}}</div>
+              <div class="drink-p">{{drink_1_price}}</div>
+            </div>
+          </div>
+          <div class="drink-card">
+            <span class="drink-icon">{{drink_2_icon}}</span>
+            <div class="drink-info">
+              <div class="drink-n">{{drink_2_name}}</div>
+              <div class="drink-p">{{drink_2_price}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Featured visual -->
+      <div class="right-col">
+        <div class="feature-circle">
+          <!-- ⬇ BIẾN: {{featured_emoji}} -->
+          {{featured_emoji}}
+          <!-- ⬇ BIẾN: {{featured_price}} -->
+          <div class="feature-price">{{featured_price}}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bar">
+      <div>
+        <div class="brand-name">Hy Coffee</div>
+        <div class="brand-sub">Truyền Thống Việt Nam</div>
+      </div>
+      <div class="brand-tag">
+        141 Cách Mạng Tháng 8, Pleiku<br>
+        #HyCoffee #WeekendSpecial
+      </div>
+    </div>
+  </div>
+</body>
+</html>

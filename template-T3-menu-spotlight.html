@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 1080px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: 'Be Vietnam Pro', sans-serif;
+    }
+
+    .frame {
+      width: 1080px;
+      height: 1080px;
+      position: relative;
+      background: linear-gradient(150deg, #6B3F2A 0%, #4A2C18 40%, #3D2314 100%);
+      overflow: hidden;
+    }
+
+    /* Decorative circles */
+    .deco-circle {
+      position: absolute;
+      border-radius: 50%;
+    }
+    .dc-1 {
+      width: 600px; height: 600px;
+      right: -150px; top: -150px;
+      background: radial-gradient(circle, rgba(196,149,106,0.12) 0%, transparent 70%);
+    }
+    .dc-2 {
+      width: 400px; height: 400px;
+      left: -100px; bottom: -100px;
+      background: radial-gradient(circle, rgba(196,149,106,0.08) 0%, transparent 70%);
+    }
+
+    /* Product spotlight area */
+    .product-panel {
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 480px;
+      background: linear-gradient(135deg, rgba(196,149,106,0.18) 0%, rgba(196,149,106,0.05) 100%);
+      border-right: 1px solid rgba(196,149,106,0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 40px;
+    }
+
+    .product-emoji {
+      font-size: 120px;
+      margin-bottom: 24px;
+      filter: drop-shadow(0 8px 24px rgba(0,0,0,0.4));
+    }
+
+    .product-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      font-weight: 700;
+      color: #F5E6C8;
+      text-align: center;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .product-price-badge {
+      background: linear-gradient(135deg, #C4956A, #8B5A3A);
+      color: #FDF8EE;
+      font-size: 26px;
+      font-weight: 700;
+      padding: 12px 32px;
+      border-radius: 50px;
+      letter-spacing: 1px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    /* Right content panel */
+    .info-panel {
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 600px;
+      padding: 70px 64px 70px 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .category-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(196,149,106,0.15);
+      border: 1px solid rgba(196,149,106,0.35);
+      color: #C4956A;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border-radius: 50px;
+      margin-bottom: 36px;
+      width: fit-content;
+    }
+
+    .spotlight-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(196,149,106,0.6);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .dish-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: 56px;
+      font-weight: 700;
+      color: #F5E6C8;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .dish-headline em {
+      color: #C4956A;
+      font-style: italic;
+    }
+
+    .dish-sub {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 22px;
+      color: rgba(245,230,200,0.5);
+      margin-bottom: 36px;
+    }
+
+    .divider-line {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(to right, #C4956A, transparent);
+      margin-bottom: 36px;
+    }
+
+    /* ⬇ BIẾN: description text */
+    .description {
+      font-size: 18px;
+      font-weight: 400;
+      color: rgba(245,230,200,0.78);
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    .highlight-row {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+    .highlight-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(245,230,200,0.07);
+      border: 1px solid rgba(245,230,200,0.12);
+      color: rgba(245,230,200,0.7);
+      font-size: 13px;
+      padding: 8px 18px;
+      border-radius: 50px;
+    }
+
+    /* Brand footer */
+    .brand-bar {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 28px 56px;
+      background: rgba(0,0,0,0.25);
+      border-top: 1px solid rgba(196,149,106,0.15);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      color: rgba(245,230,200,0.9);
+    }
+    .brand-sub {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(196,149,106,0.5);
+      margin-top: 3px;
+    }
+    .brand-right {
+      font-size: 13px;
+      color: rgba(196,149,106,0.55);
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <div class="deco-circle dc-1"></div>
+    <div class="deco-circle dc-2"></div>
+
+    <!-- Left: Product visual -->
+    <div class="product-panel">
+      <!-- ⬇ BIẾN: {{product_emoji}} từ Google Sheets -->
+      <div class="product-emoji">{{product_emoji}}</div>
+      <!-- ⬇ BIẾN: {{product_name}} -->
+      <div class="product-name">{{product_name}}</div>
+      <!-- ⬇ BIẾN: {{product_price}} -->
+      <div class="product-price-badge">{{product_price}}</div>
+    </div>
+
+    <!-- Right: Info -->
+    <div class="info-panel">
+      <div class="category-tag">☕ Menu Spotlight</div>
+
+      <div class="spotlight-label">Thứ Ba · Hôm Nay Nổi Bật</div>
+      <!-- ⬇ BIẾN: {{product_name}} -->
+      <div class="dish-headline">{{product_name}}</div>
+      <!-- ⬇ BIẾN: {{product_tagline}} -->
+      <div class="dish-sub">{{product_tagline}}</div>
+
+      <div class="divider-line"></div>
+
+      <!-- ⬇ BIẾN: {{description}} -->
+      <div class="description">{{description}}</div>
+
+      <!-- ⬇ BIẾN: {{benefit_1}}, {{benefit_2}} -->
+      <div class="highlight-row">
+        <div class="highlight-chip">✦ {{benefit_1}}</div>
+        <div class="highlight-chip">✦ {{benefit_2}}</div>
+      </div>
+    </div>
+
+    <div class="brand-bar">
+      <div>
+        <div class="brand-name">Hy Coffee</div>
+        <div class="brand-sub">Truyền Thống Việt Nam</div>
+      </div>
+      <div class="brand-right">
+        141 Cách Mạng Tháng 8, Pleiku<br>
+        #HyCoffee #MenuSpotlight
+      </div>
+    </div>
+  </div>
+</body>
+</html>

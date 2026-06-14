@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 1080px;
+      height: 1080px;
+      overflow: hidden;
+      font-family: 'Be Vietnam Pro', sans-serif;
+    }
+
+    .frame {
+      width: 1080px;
+      height: 1080px;
+      position: relative;
+      background: #1C1008;
+      overflow: hidden;
+    }
+
+    /* Warm vignette light source */
+    .light-source {
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(196,149,106,0.18) 0%, rgba(107,63,42,0.08) 50%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Photo placeholder — top half */
+    .photo-area {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 520px;
+      background: linear-gradient(135deg, #2A1A0E 0%, #4A2C18 50%, #3D2314 100%);
+      overflow: hidden;
+    }
+
+    /* Inside photo: simulated depth/texture */
+    .photo-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .photo-overlay-gradient {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 240px;
+      background: linear-gradient(to bottom, transparent, #1C1008);
+    }
+
+    /* Behind the Scenes badge overlaid on photo */
+    .bts-badge {
+      position: absolute;
+      top: 48px;
+      left: 56px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(28,16,8,0.7);
+      border: 1px solid rgba(196,149,106,0.35);
+      backdrop-filter: blur(8px);
+      color: #C4956A;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      border-radius: 50px;
+      z-index: 20;
+    }
+
+    /* Story counter top-right */
+    .story-counter {
+      position: absolute;
+      top: 48px; right: 56px;
+      font-size: 13px;
+      color: rgba(245,230,200,0.5);
+      z-index: 20;
+    }
+
+    /* Large BTS icon inside photo */
+    .photo-icon {
+      font-size: 160px;
+      opacity: 0.15;
+      filter: drop-shadow(0 0 40px rgba(196,149,106,0.3));
+    }
+
+    /* Content area – bottom */
+    .content-area {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      top: 440px;
+      padding: 48px 72px 56px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-eye {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: rgba(196,149,106,0.6);
+      margin-bottom: 20px;
+    }
+
+    .story-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 54px;
+      font-weight: 700;
+      color: #F5E6C8;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+    .story-title em { color: #C4956A; font-style: italic; }
+
+    .story-subtitle {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 20px;
+      color: rgba(245,230,200,0.45);
+      margin-bottom: 32px;
+    }
+
+    .divider { width: 56px; height: 1px; background: linear-gradient(to right, #C4956A, transparent); margin-bottom: 28px; }
+
+    /* ⬇ BIẾN: story paragraph */
+    .story-body {
+      font-size: 19px;
+      font-weight: 400;
+      color: rgba(245,230,200,0.75);
+      line-height: 1.7;
+      flex: 1;
+    }
+    .story-body strong { color: #F5E6C8; }
+
+    /* Brand footer */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 24px;
+      border-top: 1px solid rgba(196,149,106,0.12);
+      margin-top: 16px;
+    }
+    .brand-name { font-family: 'Playfair Display', serif; font-size: 22px; color: rgba(245,230,200,0.85); }
+    .brand-sub { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: rgba(196,149,106,0.4); margin-top: 3px; }
+    .brand-tag { font-size: 13px; color: rgba(196,149,106,0.45); text-align: right; }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <div class="light-source"></div>
+
+    <!-- Photo area – top -->
+    <div class="photo-area">
+      <div class="photo-inner">
+        <!-- ⬇ BIẾN: {{scene_icon}} - có thể là emoji/icon đại diện cảnh phía sau quán -->
+        <div class="photo-icon">{{scene_icon}}</div>
+      </div>
+      <div class="photo-overlay-gradient"></div>
+
+      <div class="bts-badge">📷 Behind the Scenes</div>
+      <div class="story-counter">Thứ Năm</div>
+    </div>
+
+    <!-- Content – bottom -->
+    <div class="content-area">
+      <div class="section-eye">Câu Chuyện Từ Quán</div>
+
+      <!-- ⬇ BIẾN: {{story_title}} -->
+      <div class="story-title">{{story_title}}</div>
+      <!-- ⬇ BIẾN: {{story_subtitle}} -->
+      <div class="story-subtitle">{{story_subtitle}}</div>
+
+      <div class="divider"></div>
+
+      <!-- ⬇ BIẾN: {{story_body}} -->
+      <div class="story-body">{{story_body}}</div>
+
+      <div class="footer">
+        <div>
+          <div class="brand-name">Hy Coffee</div>
+          <div class="brand-sub">Truyền Thống Việt Nam</div>
+        </div>
+        <div class="brand-tag">
+          141 Cách Mạng Tháng 8, Pleiku<br>
+          #HyCoffee #BehindTheScenes
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
